@@ -20,15 +20,25 @@ RKE2_ETCD_VERSION=${RKE2_ETCD_VERSION:-v3.4.13-k3s1}
 RKE2_IMAGE_BUILD_VERSION=${RKE2_IMAGE_BUILD_VERSION:-build20210223}
 RKE2_PAUSE_VERSION=${RKE2_PAUSE_VERSION:-3.2}
 
+if [ -n "${DEBUG}" ]; then
+  GCFLAGS="-N -l"
+fi
+
+LINKFLAGS="-extldflags -static"
+if [ -z "$DEBUG" ]; then
+  LINKFLAGS="${LINKFLAGS} -s -w"
+fi
+
 go build -o ../../bin/rancherd-${ARCH} \
-    -ldflags '-w -s -extldflags "-static"
-    -X github.com/rancher/rke2/pkg/images.KubernetesVersion='${RKE2_VERSION}'-'${ARCH}'
-    -X github.com/rancher/rke2/pkg/images.DefaultEtcdImage=rancher/hardened-etcd:'${RKE2_ETCD_VERSION}'-'${RKE2_IMAGE_BUILD_VERSION}'
-    -X github.com/rancher/rke2/pkg/images.DefaultKubernetesImage=rancher/hardened-kubernetes:'${RKE2_VERSION}'
-    -X github.com/rancher/rke2/pkg/images.DefaultPauseImage=rancher/pause:'${RKE2_PAUSE_VERSION}'
-    -X github.com/rancher/rke2/pkg/images.DefaultRuntimeImage=rancher/rancher-runtime:'${RUNTIME_TAG}'
+    -gcflags="all=${GCFLAGS}" \
+    -ldflags \
+   "-X github.com/rancher/rke2/pkg/images.KubernetesVersion=${RKE2_VERSION}-${ARCH}
+    -X github.com/rancher/rke2/pkg/images.DefaultEtcdImage=rancher/hardened-etcd:${RKE2_ETCD_VERSION}-${RKE2_IMAGE_BUILD_VERSION}
+    -X github.com/rancher/rke2/pkg/images.DefaultKubernetesImage=rancher/hardened-kubernetes:${RKE2_VERSION}
+    -X github.com/rancher/rke2/pkg/images.DefaultPauseImage=rancher/pause:${RKE2_PAUSE_VERSION}
+    -X github.com/rancher/rke2/pkg/images.DefaultRuntimeImage=rancher/rancher-runtime:${RUNTIME_TAG}
     -X github.com/rancher/k3s/pkg/version.Program=rke2
-    -X github.com/rancher/k3s/pkg/version.Version='$RUNTIME_TAG \
+    -X github.com/rancher/k3s/pkg/version.Version=$RUNTIME_TAG $LINKFLAGS" \
     -tags "netgo osusergo selinux no_stage static_build sqlite_omit_load_extension"
 if [ "$ARCH" = "amd64" ]; then
     cp ../../bin/rancherd-${ARCH} ../../bin/rancherd
