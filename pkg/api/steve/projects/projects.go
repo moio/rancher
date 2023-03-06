@@ -4,6 +4,8 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/rancher/steve/pkg/stores/partition"
+
 	"github.com/gorilla/mux"
 	"github.com/rancher/apiserver/pkg/server"
 	"github.com/rancher/apiserver/pkg/types"
@@ -14,7 +16,6 @@ import (
 	"github.com/rancher/steve/pkg/client"
 	"github.com/rancher/steve/pkg/schema"
 	steveserver "github.com/rancher/steve/pkg/server"
-	"github.com/rancher/steve/pkg/stores/proxy"
 )
 
 type projectServer struct {
@@ -51,7 +52,7 @@ func (s *projectServer) Setup(ctx context.Context, server *steveserver.Server) e
 }
 
 func (s *projectServer) newSchemas() *types.APISchemas {
-	store := proxy.NewProxyStore(s.cf, nil, s.asl)
+	store := partition.NewProxyStore(s.cf, nil, s.asl)
 	schemas := types.EmptyAPISchemas()
 
 	schemas.MustImportAndCustomize(v3.Project{}, func(schema *types.APISchema) {
