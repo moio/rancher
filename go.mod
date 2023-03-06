@@ -2,6 +2,8 @@ module github.com/rancher/rancher
 
 go 1.19
 
+replace github.com/rancher/steve => github.com/moio/steve v0.0.0-20230317153801-0bb31855e870
+
 replace (
 	github.com/docker/distribution => github.com/docker/distribution v2.7.1+incompatible // oras dep requires a replace is set
 	github.com/docker/docker => github.com/docker/docker v20.10.9+incompatible // oras dep requires a replace is set
@@ -162,6 +164,7 @@ require github.com/google/gnostic v0.5.7-v3refs
 
 require (
 	github.com/kr/fs v0.1.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.16 // indirect
 	k8s.io/pod-security-admission v0.25.4 // indirect
 )
 
