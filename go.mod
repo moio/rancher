@@ -2,6 +2,8 @@ module github.com/rancher/rancher
 
 go 1.19
 
+replace github.com/rancher/steve => github.com/moio/steve v0.0.0-20230315090743-44a6096815f3
+
 replace (
 	github.com/docker/distribution => github.com/docker/distribution v2.7.1+incompatible // oras dep requires a replace is set
 	github.com/docker/docker => github.com/docker/docker v20.10.9+incompatible // oras dep requires a replace is set
