@@ -303,3 +303,5 @@ LABEL "io.artifacthub.package.logo-url"="https://raw.githubusercontent.com/ranch
       "org.opensuse.reference"=rancher/rancher:${VERSION}
 
 ENTRYPOINT ["entrypoint.sh"]
+LABEL org.opencontainers.image.source=https://github.com/moio/rancher
+LABEL org.opencontainers.image.source=https://github.com/moio/rancher

@@ -5,6 +5,11 @@ go 1.23.0
 toolchain go1.23.4
 
 replace (
+	github.com/rancher/lasso => github.com/moio/lasso v0.0.0-20241217090118-b8fa3ee7ded8
+	github.com/rancher/steve => github.com/moio/steve v0.0.0-20241217124143-839bbf5ac13b
+)
+
+replace (
 	github.com/containerd/containerd => github.com/containerd/containerd v1.6.27 // for compatibilty with docker 20.10.x
 	github.com/crewjam/saml => github.com/rancher/saml v0.4.14-rancher3
 	github.com/docker/distribution => github.com/docker/distribution v2.8.2+incompatible // rancher-machine requires a replace is set
@@ -131,7 +136,7 @@ require (
 	github.com/rancher/fleet/pkg/apis v0.11.0
 	github.com/rancher/gke-operator v1.10.0
 	github.com/rancher/kubernetes-provider-detector v0.1.5
-	github.com/rancher/lasso v0.0.0-20240924233157-8f384efc8813
+	github.com/rancher/lasso v0.0.0-20241202185148-04649f379358
 	github.com/rancher/machine v0.15.0-rancher124
 	github.com/rancher/norman v0.0.0-20241001183610-78a520c160ab
 	github.com/rancher/rancher/pkg/client v0.0.0
