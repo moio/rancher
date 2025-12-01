@@ -1,0 +1,99 @@
+suite: Test Gateway
+templates:
+- gateway.yaml
+tests:
+- it: should render Gateway with default values
+  set:
+    hostname: host.example.com
+    gateway:
+      enabled: true
+      gatewayClassName: envoy
+  asserts:
+    - isKind:
+        of: Gateway
+    - equal:
+        path: apiVersion
+        value: gateway.networking.k8s.io/v1
+    - equal:
+        path: spec.gatewayClassName
+        value: envoy
+    - equal:
+        path: spec.listeners[0].name
+        value: http
+    - equal:
+        path: spec.listeners[0].port
+        value: 80
+    - equal:
+        path: spec.listeners[0].protocol
+        value: HTTP
+    - equal:
+        path: spec.listeners[0].hostname
+        value: host.example.com
+- it: should render Gateway with TLS enabled
+  set:
+    hostname: host.example.com
+    gateway:
+      enabled: true
+      gatewayClassName: envoy
+      tls:
+        enabled: true
+        secretName: my-tls-secret
+  asserts:
+    - equal:
+        path: spec.listeners[0].name
+        value: http
+    - equal:
+        path: spec.listeners[1].name
+        value: https
+    - equal:
+        path: spec.listeners[1].port
+        value: 443
+    - equal:
+        path: spec.listeners[1].protocol
+        value: HTTPS
+    - equal:
+        path: spec.listeners[1].tls.mode
+        value: Terminate
+    - equal:
+        path: spec.listeners[1].tls.certificateRefs[0].name
+        value: my-tls-secret
+- it: should render Gateway with annotations
+  set:
+    hostname: host.example.com
+    gateway:
+      enabled: true
+      gatewayClassName: envoy
+      annotations:
+        custom.annotation/key: value
+  asserts:
+    - equal:
+        path: metadata.annotations
+        value:
+          custom.annotation/key: value
+- it: should render Gateway with custom listeners
+  set:
+    hostname: host.example.com
+    gateway:
+      enabled: true
+      gatewayClassName: envoy
+      listeners:
+        - name: custom-http
+          port: 8080
+          protocol: HTTP
+          hostname: custom.example.com
+  asserts:
+    - equal:
+        path: spec.listeners
+        value:
+          - name: custom-http
+            port: 8080
+            protocol: HTTP
+            hostname: custom.example.com
+- it: should fail when hostname is not set
+  set:
+    gateway:
+      enabled: true
+      gatewayClassName: envoy
+  asserts:
+    - failedTemplate:
+        errorPattern: "gateway requires hostname to be set"

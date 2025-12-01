@@ -95,6 +95,33 @@ ingress:
     source: rancher
     secretName: tls-rancher-ingress
 
+# -- Create a Gateway API Gateway resource
+# Requires Gateway API CRDs and a suitable controller installed within the cluster
+# (see: https://gateway-api.sigs.k8s.io/guides/)
+gateway:
+  # Gateway enabled.
+  enabled: false
+  # Gateway annotations.
+  annotations: {}
+  # The name of the GatewayClass to use for this Gateway.
+  # Examples: envoy, istio, cilium, traefik
+  gatewayClassName: ""
+  # TLS configuration for the Gateway.
+  tls:
+    enabled: false
+    # Name of the Secret containing TLS certificate.
+    secretName: tls-rancher-ingress
+  # Custom listeners configuration.
+  # If not specified, default HTTP and optional HTTPS listeners will be created.
+  # listeners:
+  # - name: http
+  #   port: 80
+  #   protocol: HTTP
+  #   hostname: rancher.example.com
+  #   allowedRoutes:
+  #     namespaces:
+  #       from: Same
+
 # -- Expose the service via gateway-api HTTPRoute
 # Requires Gateway API resources and suitable controller installed within the cluster
 # (see: https://gateway-api.sigs.k8s.io/guides/)
@@ -107,8 +134,10 @@ httpRoute:
   # Must use 443 when `service.disableHTTP` is set to true.
   servicePort: 80
   # Which Gateways this Route is attached to.
+  # When using the chart-generated Gateway (gateway.enabled=true), you can reference it
+  # by using the release name (e.g., "rancher" if installed with `helm install rancher ...`).
   parentRefs:
-  - name: gateway
+  - name: rancher
     sectionName: http
     # namespace: default
   # List of rules and filters applied.
