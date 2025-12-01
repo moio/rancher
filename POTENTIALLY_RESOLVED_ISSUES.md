@@ -1,6 +1,6 @@
-# Survey of 500 Oldest Open Rancher Issues
+# Survey of 1000 Oldest Open Rancher Issues
 
-This document surveys the 500 oldest open issues in the rancher/rancher repository (from 2017-2019), identifying those that appear to have already been addressed.
+This document surveys the 1000 oldest open issues in the rancher/rancher repository (from 2017-2019), identifying those that appear to have already been addressed.
 
 ## Already Fixed (via code changes)
 
