@@ -103,7 +103,7 @@ This appears to be a **unique issue** specific to k8s 1.16+ API changes. The iss
 ## Summary of Recommended Actions
 
 | Issue Group | Recommended Action |
-|-------------|-------------------|
+|:----------------------------|:---------------------------------------------------|
 | Group 1 (install-uuid) | Close #31834 as duplicate of #31534 |
 | Group 2 (Waiting for API) | Cross-link #23266 and #32410 |
 | Group 3 (DNS Resolution) | Cross-link #16454 and #16757, add explanation comment |
@@ -124,5 +124,13 @@ Many issues in the rancher/rancher repository share similar symptoms but have di
 Care should be taken when closing issues as duplicates to ensure the underlying causes are truly the same and not just manifesting with similar symptoms.
 
 ---
+
+## Methodology
+
+This analysis was conducted by:
+1. Searching open issues in rancher/rancher using GitHub's issue search API
+2. Identifying common error patterns and keywords (e.g., "install-uuid", "Could not resolve host", "Waiting for API", "cattle-cluster-agent")
+3. Manually reviewing issue descriptions, error logs, and user comments to identify root cause similarities
+4. Cross-referencing issues that share the same error messages or symptom patterns
 
 *Report generated: 2025-12-01*
