@@ -2,6 +2,9 @@
 {{- if not .Values.hostname }}
 {{- fail "gateway requires hostname to be set" }}
 {{- end }}
+{{- if not .Values.gateway.gatewayClassName }}
+{{- fail "gateway requires gatewayClassName to be set" }}
+{{- end }}
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:

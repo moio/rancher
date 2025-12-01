@@ -97,3 +97,11 @@ tests:
   asserts:
     - failedTemplate:
         errorPattern: "gateway requires hostname to be set"
+- it: should fail when gatewayClassName is not set
+  set:
+    hostname: host.example.com
+    gateway:
+      enabled: true
+  asserts:
+    - failedTemplate:
+        errorPattern: "gateway requires gatewayClassName to be set"
