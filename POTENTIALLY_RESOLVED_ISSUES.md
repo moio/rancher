@@ -92,4 +92,4 @@ Many of the surveyed issues fall into categories that require more detailed inve
 
 ---
 
-*This survey was conducted on December 1, 2025 examining issues created between 2017-2019.*
+*This survey was conducted examining issues created between 2017-2019.*
