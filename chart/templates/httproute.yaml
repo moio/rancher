@@ -1,4 +1,10 @@
 {{- if .Values.httpRoute.enabled -}}
+{{- if not .Values.hostname }}
+{{- fail "httpRoute requires hostname to be set" }}
+{{- end }}
+{{- if not .Values.httpRoute.parentRefs }}
+{{- fail "httpRoute requires parentRefs to be set" }}
+{{- end }}
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -11,9 +17,7 @@ metadata:
   {{- end }}
 spec:
   parentRefs:
-    {{- with .Values.httpRoute.parentRefs }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
+    {{- toYaml .Values.httpRoute.parentRefs | nindent 4 }}
   hostnames:
     - {{ .Values.hostname }}
   rules:
